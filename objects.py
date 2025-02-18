@@ -43,9 +43,9 @@ class TypingSpeedApp:
         self.sample_text = random.choice(self.sample_texts)
         self.sample_text_display.config(text=self.sample_text)
 
-        self.text_box.delete(1.0, tk.END)  # Clear any previous text
         self.start_button.config(state=tk.DISABLED)
         self.text_box.config(state=tk.NORMAL)
+        self.text_box.delete(1.0, tk.END)  # Clear any previous text
         self.text_box.focus()  # Focus on the text box
         self.start_time = time.time()
 
