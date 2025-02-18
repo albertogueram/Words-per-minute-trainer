@@ -1,17 +1,15 @@
 import tkinter as tk
 import time
+import random
 
 
 class TypingSpeedApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Typing Speed Test")
+        self.sample_texts = self.load_texts("sample_texts")
+        self.sample_text = ""
 
-        # Sample text for the user to type
-        self.sample_text = ("The quick brown fox jumps over the lazy dog. "
-                            "This is a common pangram used to test typing speed.")
-
-        # Time tracking variables
         self.start_time = None
         self.end_time = None
         self.words_typed = 0
@@ -33,7 +31,18 @@ class TypingSpeedApp:
         self.result_label = tk.Label(root, text="Typing Speed: 0 WPM", font=("Courier", 12))
         self.result_label.pack(pady=10)
 
+    def load_texts(self, filename):
+        try:
+            with open(filename, "r", encoding="utf-8") as file:
+                texts = [line.strip() for line in file if line.strip()]
+                return texts if texts else ["No sample texts found in file."]
+        except FileNotFoundError:
+            return ["Error: Text file not found."]
+
     def start_test(self):
+        self.sample_text = random.choice(self.sample_texts)
+        self.sample_text_display.config(text=self.sample_text)
+
         self.text_box.delete(1.0, tk.END)  # Clear any previous text
         self.start_button.config(state=tk.DISABLED)
         self.text_box.config(state=tk.NORMAL)
